@@ -1,22 +1,27 @@
-#container {
-    width: 1024;
-    height: 576;
+body {
+    background-color: grey;
+    
 }
 
-#player {
+.container {
+    position: relative;
+    border: solid;
+    height: 800px;
+    width: 940px
+}
+
+.player {
     position: absolute;
-    background: blue;
-    top: 20px;
-    left: 10px;
+    height: 50px;
     width: 50px;
-    height: 50px;
+    background-color: blue;
+    margin-top: 10px;
 }
 
-#floor {
+.floor {
     position: absolute;
-    background-color: black;
-    top: 250px;
-    left: 0px;
-    width: 1000px;
+    top: 700px;
     height: 50px;
+    width: 930px;
+    background-color: black;
 }
