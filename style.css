@@ -6,22 +6,35 @@ body {
 .container {
     position: relative;
     border: solid;
-    height: 800px;
-    width: 940px
+    height: 350;
+    width: 750;
 }
 
 .player {
     position: absolute;
-    height: 50px;
-    width: 50px;
+    bottom: 200;
+    height: 50;
+    width: 50;
     background-color: blue;
-    margin-top: 10px;
+    border: solid blue;
+   
 }
 
 .floor {
     position: absolute;
-    top: 700px;
-    height: 50px;
-    width: 930px;
+    bottom: 0;
+    height: 50;
+    width: 750;
     background-color: black;
+    border: solid black;
+}
+
+.wall {
+    position: absolute;
+    bottom: 50;
+    left: 300;
+    height: 50;
+    width: 50;
+    background-color: black;
+    border: solid black;
 }
