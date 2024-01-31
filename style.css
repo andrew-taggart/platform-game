@@ -1,7 +1,7 @@
 body {
     margin: 0;
     background-color: grey;
-    
+    overflow: hidden;
 }
 
 .game-object {
@@ -17,7 +17,7 @@ body {
     background-color: blue;
    
 }
-
+/* Platform Locations*/
 .platform {
     background-color: black;
 }
@@ -47,4 +47,22 @@ body {
     top: 375px;
     width: 700px;
     height: 20px;
+}
+
+/* Lava Locations*/
+.lava {
+    background-color: red;
+}
+#lava1 {
+    top: 380px;
+    left: 700px;
+    width: 100px;
+    height: 20px;
+}
+/*Goal Locations*/
+.goal {
+    background-color: green;
+    left: 800px;
+    width: 100px;
+    height: 400px;
 }

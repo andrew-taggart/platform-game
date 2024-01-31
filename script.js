@@ -1,8 +1,12 @@
 const player = document.querySelector("#player")
-const platforms = document.querySelectorAll(".platform")
-const gravity = 1
+const objects = document.querySelectorAll(".platform")
+const restartBtn = document.querySelector(".playAgain")
+
 
 //Game Values
+const gravity = 1
+const keys = {}
+
 //Player
 let pX = 50
 let pY = 50
@@ -17,8 +21,8 @@ function collision(obj1, obj2) {
            obj1.y + obj1.height > obj2.y
 }
 
-//Movement Event Listeners
-const keys = {}
+//Event Listeners
+restartBtn.addEventListener('click', restartGame)
 document.addEventListener('keydown', (e) => {
     keys[e.key] = true
 })
@@ -48,8 +52,8 @@ function gameLoop() {
     player.style.top = pY + 'px'
 
     //Collision Implementation
-    platforms.forEach((platform) => {
-        const objLocation = platform.getBoundingClientRect()
+    objects.forEach((object) => {
+        const objLocation = object.getBoundingClientRect()
         const playerLocation = player.getBoundingClientRect()
 
         if (collision(playerLocation, objLocation) && velocityY > 0) {
@@ -62,8 +66,15 @@ function gameLoop() {
     requestAnimationFrame(gameLoop)
 }
 gameLoop()
-//implement velocity values into movement, collision, and gravity
-//adjust object collision to 0 out movement velocity
 
 
+//Restart Button
+function restartGame() {
+    pX = 50
+    pY = 50
+    velocityX = 0
+    velocityY = 0
+    jumping = false
+    gameLoop()
+}
     
