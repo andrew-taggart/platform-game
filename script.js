@@ -1,18 +1,21 @@
 const player = document.querySelector("#player")
-const objects = document.querySelectorAll(".platform")
+const objects = document.querySelectorAll(".game-object")
+const lava = document.querySelectorAll('.lava')
+const goal = document.querySelector('.goal')
 const restartBtn = document.querySelector(".playAgain")
 
+//Check Locations
 
 //Game Values
 const gravity = 1
 const keys = {}
-
 //Player
 let pX = 50
 let pY = 50
 let velocityX = 0
 let velocityY = 0
 let jumping = false
+
 //Collision Equation
 function collision(obj1, obj2) {
     return obj1.x < obj2.x + obj2.width &&
@@ -20,6 +23,16 @@ function collision(obj1, obj2) {
            obj1.y < obj2.y + obj2.height &&
            obj1.y + obj1.height > obj2.y
 }
+
+function checkGoal() {
+    const goalLocation = goal.getBoundingClientRect()
+    const playerLocation = player.getBoundingClientRect()
+    if (collision(playerLocation, goalLocation)) {
+        alert('Congrats')
+    }
+}
+
+
 
 //Event Listeners
 restartBtn.addEventListener('click', restartGame)
@@ -29,7 +42,7 @@ document.addEventListener('keydown', (e) => {
 document.addEventListener('keyup', (e) => {
     keys[e.key] = false
 })
-
+//In Game
 function gameLoop() {
     //Movement Implementation
     if (keys['ArrowLeft']) {
@@ -53,20 +66,35 @@ function gameLoop() {
 
     //Collision Implementation
     objects.forEach((object) => {
+        if (object !== player) {
         const objLocation = object.getBoundingClientRect()
         const playerLocation = player.getBoundingClientRect()
+       
 
-        if (collision(playerLocation, objLocation) && velocityY > 0) {
-            pY = objLocation.top - player.offsetHeight
+        if (collision(playerLocation, objLocation)) {
+            pY -= velocityY
+            //pX -= velocityX
             jumping = false
             velocityY = 0
         }
+    }
     })
 
+    lava.forEach((lava) => {
+        if (lava !== player) {
+        const lavaLocation = lava.getBoundingClientRect()
+        const playerLocation = player.getBoundingClientRect()
+        if (collision(playerLocation, lavaLocation)) {
+            alert('Game Over')
+        }
+    }
+    })
+    //Function Activation
     requestAnimationFrame(gameLoop)
+    checkGoal()
+    
 }
 gameLoop()
-
 
 //Restart Button
 function restartGame() {
