@@ -9,6 +9,13 @@ let pY = 50
 let velocityX = 0
 let velocityY = 0
 let jumping = false
+//Collision Equation
+function collision(obj1, obj2) {
+    return obj1.x < obj2.x + obj2.width &&
+           obj1.x + obj1.width > obj2.x &&
+           obj1.y < obj2.y + obj2.height &&
+           obj1.y + obj1.height > obj2.y
+}
 
 //Movement Event Listeners
 const keys = {}
@@ -40,6 +47,18 @@ function gameLoop() {
     player.style.left = pX + 'px'
     player.style.top = pY + 'px'
 
+    //Collision Implementation
+    platforms.forEach((platform) => {
+        const objLocation = platform.getBoundingClientRect()
+        const playerLocation = player.getBoundingClientRect()
+
+        if (collision(playerLocation, objLocation) && velocityY > 0) {
+            pY = objLocation.top - player.offsetHeight
+            jumping = false
+            velocityY = 0
+        }
+    })
+
     requestAnimationFrame(gameLoop)
 }
 gameLoop()
@@ -47,28 +66,4 @@ gameLoop()
 //adjust object collision to 0 out movement velocity
 
 
-/*
-//Functions
-let spdInterval = setInterval(gameLoop, 1000/20)
-
-    let object1 = document.createElement("div")
-    object1.setAttribute("class", "ojbect1")
-
-
-
-
-
-function collision() {
-    if (player.offsetTop > wall.offsetTop - wall.offsetHeight &&
-        player.offsetTop - player.offsetHeight < wall.offsetTop && 
-        player.offsetLeft < wall.offsetLeft + wall.offsetWidth &&
-        player.offsetLeft + player.offsetWidth > wall.offsetLeft) 
-        {}}
-
-//Movement
-//set interval speed keep movement at 1px
-//add 'for loop' for jump
-//use keyup function to cancel jump hold
-    */
-   
     
