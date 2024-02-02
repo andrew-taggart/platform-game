@@ -24,28 +24,37 @@ body {
 
 h3 {
     font-size: 30px;
+    margin-bottom: 10px;
 }
 
 .endMsg {
     position: absolute;
     top: 50%;
     left: 50%;
+    height: 100px;
+    width: 250px;
     transform: translate(-50%, -50%);
-    display:block;
+    text-align: center;
+    border: solid black;
+    background-color: grey;
+    display: none;
 }
 .win {
-    margin-left: 50%;
     margin-top: 25px;
+
+    color: green;
     
 }
 .playAgain {
     background-color: darkcyan;
+    margin: 0 auto;
+  
 }
 
 .lose {
     color: red;
-    margin-left: 50%;
     margin-top: 25px;
+    
 }
 
 

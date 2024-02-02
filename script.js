@@ -3,19 +3,20 @@ const objects = document.querySelectorAll(".game-object")
 const lava = document.querySelectorAll('.lava')
 const goal = document.querySelector('.goal')
 const restartBtn = document.querySelector(".playAgain")
-const endMsg = document.querySelector('.popup')
+const endMsg = document.querySelector('.endMsg')
+const lose = document.querySelector('.lose')
+const win = document.querySelector('.win')
+let speedConstant
 
 //Game Values
-const gravity = 1
+const gravity = 3
 const keys = {}
-let speedConstant
 //Player
 let pX = 1
 let pY = 1
 let velocityX = 0
 let velocityY = 0
 let jumping = false
-
 
 //Collision Equation
 function collision(obj1, obj2) {
@@ -29,12 +30,38 @@ function checkGoal() {
     const goalLocation = goal.getBoundingClientRect()
     const playerLocation = player.getBoundingClientRect()
     if (collision(playerLocation, goalLocation)) {
+        lose.style.display = 'none'
+        restartBtn.style.display = 'block'
         endMsg.style.display = 'block'
+        win.style.display = 'block'
+        stopGameLoop()
+        return true
     }
+    return false
+}
+
+function checkLava() {
+    let touchLava = false
+    lava.forEach((lavaObj) => {
+        const lavaLocation = lavaObj.getBoundingClientRect()
+        const playerLocation = player.getBoundingClientRect()
+        if (collision(playerLocation, lavaLocation)) {
+            win.style.display = 'none'
+            restartBtn.style.display = 'block'
+            endMsg.style.display = 'block'
+            lose.style.display = 'block'
+            stopGameLoop()
+            touchLava = true
+        }
+    })  
+    return touchLava
 }
 
 //Event Listeners
-restartBtn.addEventListener('click', restartGame)
+restartBtn.addEventListener('click', () => {
+    stopGameLoop()
+    restartGame()
+})
 document.addEventListener('keydown', (e) => {
     keys[e.key] = true
 })
@@ -44,6 +71,7 @@ document.addEventListener('keyup', (e) => {
 //In Game
 function gameLoop() {
     //Movement Implementation
+    velocityY += gravity
     if (keys['ArrowLeft']) {
         velocityX = -5
     }else if (keys['ArrowRight']) {
@@ -51,20 +79,15 @@ function gameLoop() {
     }else{
         velocityX = 0
     }if (keys['ArrowUp'] && !jumping) {
-        velocityY = -20
+        velocityY = -30
         jumping = true
     }
-
-    velocityY += gravity
 
     pX += velocityX
     pY += velocityY
 
     player.style.left = pX + 'px'
     player.style.top = pY + 'px'
-
-    player.style.top = `${pY}px`
-    player.style.left = `$${pX}px`
 
     //Collision Implementation
     objects.forEach((object) => {
@@ -82,15 +105,10 @@ function gameLoop() {
     }
     })
 
-    lava.forEach((lava) => {
-        if (lava !== player) {
-        const lavaLocation = lava.getBoundingClientRect()
-        const playerLocation = player.getBoundingClientRect()
-        if (collision(playerLocation, lavaLocation)) {
-            alert('Game Over')
-        }
+    if (checkLava() || checkGoal()) {
+        
+        return
     }
-    })
     //Function Activation & speed control
     speedConstant = requestAnimationFrame(gameLoop)
 }
@@ -105,11 +123,15 @@ function stopGameLoop() {
 
 //Restart Button
 function restartGame() {
-    pX = 50
-    pY = 50
+    pX = 1
+    pY = 1
     velocityX = 0
     velocityY = 0
     jumping = false
+    lose.style.display = 'none'
+    restartBtn.style.display = 'none'
+    win.style.display = 'none'
+    endMsg.style.display = 'none'
     startGameLoop()
 }
 
