@@ -8,12 +8,14 @@ const endMsg = document.querySelector('.popup')
 //Game Values
 const gravity = 1
 const keys = {}
+let speedConstant
 //Player
 let pX = 1
 let pY = 1
 let velocityX = 0
 let velocityY = 0
 let jumping = false
+
 
 //Collision Equation
 function collision(obj1, obj2) {
@@ -89,12 +91,17 @@ function gameLoop() {
         }
     }
     })
-    //Function Activation
-    requestAnimationFrame(gameLoop)
-    checkGoal()
-    
+    //Function Activation & speed control
+    speedConstant = requestAnimationFrame(gameLoop)
 }
-gameLoop()
+function startGameLoop() {
+    stopGameLoop()
+    gameLoop()
+}
+
+function stopGameLoop() {
+    cancelAnimationFrame(speedConstant)
+}
 
 //Restart Button
 function restartGame() {
@@ -103,6 +110,7 @@ function restartGame() {
     velocityX = 0
     velocityY = 0
     jumping = false
-    gameLoop()
+    startGameLoop()
 }
-    
+
+startGameLoop()
