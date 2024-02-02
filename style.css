@@ -1,21 +1,62 @@
 body {
-    margin: auto;
+    margin: 0;
     background-color: grey;
     overflow: hidden;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    position: relative;
+    height: 400px;
+    width: 900px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid black;
 }
 
 .game-object {
     position: absolute;
 }
 
-#player {
+h3 {
+    font-size: 30px;
+}
+
+.endMsg {
     position: absolute;
-    top: 50px;
-    left: 50px;
-    height: 50;
-    width: 50;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display:block;
+}
+.win {
+    margin-left: 50%;
+    margin-top: 25px;
+    
+}
+.playAgain {
+    background-color: darkcyan;
+}
+
+.lose {
+    color: red;
+    margin-left: 50%;
+    margin-top: 25px;
+}
+
+
+#player {
+    top: 1px;
+    left: 1px;
+    height: 50px;
+    width: 50px;
     background-color: blue;
-   
+    position: absolute;
+    margin: 0;   
 }
 /* Platform Locations*/
 .platform {
@@ -45,8 +86,9 @@ body {
 
 #floor {
     top: 375px;
+    left: 0;
     width: 700px;
-    height: 20px;
+    height: 25px;
 }
 
 /* Lava Locations*/
@@ -62,7 +104,9 @@ body {
 /*Goal Locations*/
 .goal {
     background-color: green;
+    top: 0;
     left: 800px;
     width: 100px;
     height: 400px;
 }
+
